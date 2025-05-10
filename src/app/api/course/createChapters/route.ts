@@ -4,13 +4,11 @@ import { prisma } from "@/lib/db";
 import { strict_output } from "@/lib/gemini";
 import { getUnsplashImage } from "@/lib/unsplash";
 import { CreatCourseChapterSchema } from "@/validators/course";
-
-
 import { ZodError } from "zod";
 
-export async function POST(req: Request,res:Response) {
+export async function POST(req: Request, res: Response) {
   try {
-   const session = await getAuthSession();
+    const session = await getAuthSession();
     if (!session?.user) {
       return new NextResponse("unauthorised", { status: 401 });
     }   
@@ -25,7 +23,7 @@ export async function POST(req: Request,res:Response) {
       }[];
     }[];
 
-   let output_units: OutputUnits = await strict_output(
+    let output_units: OutputUnits = await strict_output(
       "You are an AI capable of curating course content, coming up with relevant chapter titles, and finding relevant youtube videos for each chapter",
       new Array(units.length).fill(
         `It is your job to create a course about ${title}. The user has requested to create chapters for each of the units. Then, for each chapter, provide a detailed youtube search query that can be used to find an informative educationalvideo for each chapter. Each query should give an educational informative course in youtube.`
@@ -71,7 +69,7 @@ export async function POST(req: Request,res:Response) {
       });
     }
   
-   await prisma.user.update({
+    await prisma.user.update({
       where: {
         id: session.user.id,
       },
@@ -82,12 +80,20 @@ export async function POST(req: Request,res:Response) {
       },
     });  
 
-     return NextResponse.json({ course_id: course.id });
+    return NextResponse.json({ course_id: course.id });
   } catch (error) {
+    console.error("Error in createChapters:", error);
+    
     if (error instanceof ZodError) {
-      return new NextResponse("invalid", { status: 400 });
+      return new NextResponse("Invalid request data", { status: 400 });
     }
-    
-    
+
+    // Handle Gemini API rate limit errors
+    if (error instanceof Error && error.message.includes("429")) {
+      return new NextResponse("Rate limit exceeded. Please try again later.", { status: 429 });
+    }
+
+    // Handle other errors
+    return new NextResponse("Internal Server Error", { status: 500 });
   }
 } 

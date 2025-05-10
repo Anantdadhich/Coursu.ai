@@ -18,6 +18,7 @@ const QuizCards = ({ chapter }: Props) => {
   const [questionState, setQuestionState] = React.useState<
     Record<string, boolean | null>
   >({});
+
   const checkAnswer = React.useCallback(() => {
     const newQuestionState = { ...questionState };
     chapter.questions.forEach((question) => {
@@ -31,57 +32,80 @@ const QuizCards = ({ chapter }: Props) => {
       setQuestionState(newQuestionState);
     });
   }, [answers, questionState, chapter.questions]);
+
   return (
-   <div className="flex-[1] mt-8 sm:mt-12 md:mt-16 mx-4 sm:mx-6 md:ml-8 rounded-lg shadow-xl p-4 sm:p-5 md:p-6 overflow-y-auto bg-neutral-300 dark:bg-neutral-900">
-    <h1 className="text-xl sm:text-2xl mb-4 sm:mb-6 text-gray-800 dark:text-white font-italic">Concept Check</h1>
-    <div className="mt-2 text-gray-800 dark:text-gray-200">
-      {chapter.questions.map((question) => {
-        const options = JSON.parse(question.options) as string[];
-        return (
-          <div
-            key={question.id}
-            className={cn("p-3 sm:p-4 mt-3 sm:mt-4 border border-gray-200 dark:border-gray-700 rounded-lg", {
-              "bg-green-100 dark:bg-green-800": questionState[question.id] === true,
-              "bg-red-100 dark:bg-red-800": questionState[question.id] === false,
-              "bg-gray-100 dark:bg-gray-800": questionState[question.id] === null,
-            })}
-          >
-            <h1 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-2">{question.question}</h1>
-            <div className="mt-2 text-sm sm:text-base text-gray-700 dark:text-gray-300">
+    <div className="flex-[1] mt-6 sm:mt-8 mx-2 sm:mx-4 rounded-xl shadow-lg p-4 sm:p-5 overflow-y-auto bg-neutral-300 dark:bg-neutral-900 border border-gray-200 dark:border-gray-700">
+      <div className="flex items-center gap-3 mb-5">
+        <div className="w-1 h-8 bg-indigo-500 rounded-full"></div>
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white">
+          Concept Check
+        </h1>
+      </div>
+      
+      <div className="space-y-4">
+        {chapter.questions.map((question) => {
+          const options = JSON.parse(question.options) as string[];
+          return (
+            <div
+              key={question.id}
+              className={cn(
+                "p-4 sm:p-5 border rounded-xl transition-all duration-200",
+                {
+                  "border-green-500 bg-green-50/50 dark:bg-green-900/20": 
+                    questionState[question.id] === true,
+                  "border-red-500 bg-red-50/50 dark:bg-red-900/20": 
+                    questionState[question.id] === false,
+                  "border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50": 
+                    questionState[question.id] === null,
+                }
+              )}
+            >
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100 mb-3">
+                {question.question}
+              </h2>
+              
               <RadioGroup
                 onValueChange={(e) => {
-                  setAnswers((prev) => {
-                    return {
-                      ...prev,
-                      [question.id]: e,
-                    };
-                  });
+                  setAnswers((prev) => ({
+                    ...prev,
+                    [question.id]: e,
+                  }));
                 }}
+                className="space-y-3"
               >
-                {options.map((option, index) => {
-                  return (
-                    <div className="flex items-center space-x-2 py-1 sm:py-1.5" key={index}>
-                      <RadioGroupItem
-                        value={option}
-                        id={question.id + index.toString()}
-                      />
-                      <Label htmlFor={question.id + index.toString()} className="text-sm sm:text-base text-gray-700 dark:text-gray-300">
-                        {option}
-                      </Label>
-                    </div>
-                  );
-                })}
+                {options.map((option, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors"
+                  >
+                    <RadioGroupItem
+                      value={option}
+                      id={question.id + index.toString()}
+                      className="h-5 w-5 text-indigo-600 dark:text-indigo-400 border-2 border-black dark:border-gray-600"
+                    />
+                    <Label
+                      htmlFor={question.id + index.toString()}
+                      className="text-sm sm:text-base text-gray-700 dark:text-gray-300 cursor-pointer"
+                    >
+                      {option}
+                    </Label>
+                  </div>
+                ))}
               </RadioGroup>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
+
+      <Button
+        className="w-full mt-6  text-white dark:text-black bg-gray-900 dark:bg-gray-100 rounded-xl px-6 py-3 font-semibold text-base  transition-all duration-200 shadow-md hover:shadow-lg active:scale-[0.98]"
+        size="lg"
+        onClick={checkAnswer}
+      >
+        Check Answer
+        <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+      </Button>
     </div>
-    <Button className="w-full mt-4 sm:mt-6 bg-gradient-to-r from-gray-700 to-gray-400 text-white rounded-full px-6 sm:px-8 py-3 sm:py-4 font-semibold text-base sm:text-lg hover:from-gray-600 hover:to-neutral-800 transition-all duration-200 shadow-lg" size="lg" onClick={checkAnswer}>
-      Check Answer
-      <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 ml-1" />
-    </Button>
-  </div>
   );
 };
 

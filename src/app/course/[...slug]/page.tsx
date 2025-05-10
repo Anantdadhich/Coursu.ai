@@ -159,13 +159,13 @@ const CoursePage = async ({ params: { slug } }: Props) => {
   const prevChapter = unit.chapters[chapterIndex - 1];
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-neutral-300 dark:bg-neutral-900 text-black dark:text-white">
-      {/* Sidebar */}
-      <div className="w-full md:w-[300px] lg:w-[400px] border-r border-gray-200 dark:border-gray-800">
+    <div className="flex flex-col md:flex-row min-h-screen bg-neutral-300 dark:bg-neutral-900 text-black dark:text-white ">
+    
+      <div className="w-full md:w-[300px] lg:w-[400px] border-r border-gray-200 dark:border-gray-800 p-10 top-12">
         <CourseSideBar course={course} currentChapterId={chapter.id} />
       </div>
       
-      {/* Main Content */}
+  
       <div className="flex-1 p-4 md:p-8">
         <div className="flex flex-col lg:flex-row gap-6">
           <MainVideoSummary
@@ -179,7 +179,7 @@ const CoursePage = async ({ params: { slug } }: Props) => {
 
         <div className="h-px mt-8 mb-8 bg-gray-200 dark:bg-gray-800" />
         
-        {/* Navigation */}
+        
         <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
           {prevChapter ? (
             <Link

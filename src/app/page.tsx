@@ -542,8 +542,9 @@ const steps = [
                 <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 md:mb-0">
                   © 2025 Coursu.ai All rights reserved.
                 </p>
-              
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 md:mb-0"> Developed by Adtech</p>
               </div>
+             
             </div>
           </motion.div>
         </motion.div>
