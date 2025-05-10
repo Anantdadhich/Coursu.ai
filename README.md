@@ -1,4 +1,5 @@
-Hi there! I'm Anant, and I've created Corsu, an AI-powered platform that generates personalized courses for you with specific YouTube videos. It not only selects the best videos for you but also provides summaries and quizzes to enhance your learning experience. Watch to see how Corsu simplifies learning! Action: Check out how Corsu can revolutionize your learning process!
+Hi there! I'm Anant, and I created Coursu — an AI-powered platform that builds personalized courses for you using YouTube videos.
+Coursu doesn't just pick the most relevant videos — it also generates detailed summaries and interactive quizzes to supercharge your learning experience.
 
 https://www.loom.com/share/10dadc51e12a427194f2b97282011236?sid=79a87bc9-0658-469e-b3f3-9ed0800c5e5d
 

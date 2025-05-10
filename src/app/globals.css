@@ -33,6 +33,9 @@
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
+
+    --font-main: 'Bricolage Grotesque', sans-serif;
+    --font-secondary: 'Crimsonn Pro', sans-serif;
   }
 
   .dark {
@@ -66,6 +69,15 @@
   }
 }
 
+body {
+  font-family: var(--font-main);
+}
+
+/* Use secondary font for headings */
+h1, h2, h3 {
+  font-family: var(--font-secondary);
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -81,5 +93,48 @@
   body,
   #__next {
     @apply w-full h-full overflow-x-hidden;
+  }
+}
+
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+@theme inline {
+  --animate-shine: shine var(--duration) infinite linear;
+ 
+  @keyframes shine {
+    0% {
+      background-position: 0% 0%;
+    }
+    50% {
+      background-position: 100% 100%;
+    }
+    to {
+      background-position: 0% 0%;
+    }
   }
 }

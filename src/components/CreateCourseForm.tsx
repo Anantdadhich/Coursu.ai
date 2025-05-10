@@ -186,7 +186,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "./ui/input";
 import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
-import { Plus, Trash } from "lucide-react";
+import { Plus, Sparkles, Trash } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
@@ -249,27 +249,57 @@ const CreateCourseForm = ({isPro}:Props) => {
 
   form.watch();
 
-  return (
-    <div className="w-full max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.4 } }
+  };
+
+  return (
+    <motion.div
+    initial="hidden"
+    animate="visible"
+    variants={containerVariants}
+    className="w-full"
+  >
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <motion.div variants={itemVariants}>
           <FormField
             control={form.control}
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-xl text-gray-700 dark:text-gray-300">Course Title</FormLabel>
+                <FormLabel className="text-xl font-semibold">Course Title</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Enter the main topic of the course"
                     {...field}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    className="mt-2 h-12 bg-black/5 dark:bg-white/5 border-black/10 dark:border-white/10 rounded-xl backdrop-blur-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
                   />
                 </FormControl>
               </FormItem>
             )}
           />
+        </motion.div>
+
+        <div className="my-8">
+          <motion.div 
+            variants={itemVariants}
+            className="flex items-center mb-6"
+          >
+            <div className="w-10 h-1 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full mr-3"></div>
+            <h3 className="text-lg font-medium">Course Units</h3>
+          </motion.div>
 
           <AnimatePresence>
             {form.watch("units").map((_, index) => (
@@ -279,18 +309,24 @@ const CreateCourseForm = ({isPro}:Props) => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
+                className="mb-4"
               >
                 <FormField
                   control={form.control}
                   name={`units.${index}`}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-lg text-gray-700 dark:text-gray-300">Unit {index + 1}</FormLabel>
+                      <div className="flex items-center mb-2">
+                        <div className="w-6 h-6 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center mr-2 text-sm font-medium">
+                          {index + 1}
+                        </div>
+                        <FormLabel className="text-lg">Unit {index + 1}</FormLabel>
+                      </div>
                       <FormControl>
                         <Input
                           placeholder="Enter subtopic of the course"
                           {...field}
-                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                          className="mt-1 h-12 bg-black/5 dark:bg-white/5 border-black/10 dark:border-white/10 rounded-xl backdrop-blur-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
                         />
                       </FormControl>
                     </FormItem>
@@ -299,38 +335,61 @@ const CreateCourseForm = ({isPro}:Props) => {
               </motion.div>
             ))}
           </AnimatePresence>
+        </div>
 
-          <div className="flex items-center justify-center mt-8">
+        <motion.div 
+          variants={itemVariants}
+          className="flex flex-wrap items-center justify-center gap-4 mt-8"
+        >
+          <Button
+            type="button"
+            onClick={() => form.setValue("units", [...form.watch("units"), ""])}
+            className="relative group overflow-hidden bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-black dark:text-white rounded-xl px-6 py-3 font-medium transition-all duration-200 border border-black/10 dark:border-white/10 backdrop-filter backdrop-blur-lg flex items-center"
+          >
+            <Plus className="w-5 h-5 mr-2 text-purple-500" />
+            Add Unit
+          </Button>
+          
+          <Button
+            type="button"
+            onClick={() => {
+              if (form.watch("units").length > 1) {
+                form.setValue("units", form.watch("units").slice(0, -1));
+              }
+            }}
+            className="relative group overflow-hidden bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-black dark:text-white rounded-xl px-6 py-3 font-medium transition-all duration-200 border border-black/10 dark:border-white/10 backdrop-filter backdrop-blur-lg flex items-center"
+            disabled={form.watch("units").length <= 1}
+          >
+            <Trash className="w-5 h-5 mr-2 text-red-500" />
+            Remove Unit
+          </Button>
+        </motion.div>
+
+        <motion.div variants={itemVariants} className="pt-4">
+          <div className="relative group mt-8">
+            <div className="absolute -inset-1  rounded-full blur opacity-70 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
             <Button
-              type="button"
-              variant="outline"
-              className="mr-2"
-              onClick={() => form.setValue("units", [...form.watch("units"), ""])}
+              disabled={isLoading}
+              type="submit"
+              className="relative w-full bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 rounded-full py-6 font-semibold text-lg transition-all duration-200 flex items-center justify-center"
             >
-              Add Unit
-              <Plus className="w-4 h-4 ml-2 text-green-500" />
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => form.setValue("units", form.watch("units").slice(0, -1))}
-            >
-              Remove Unit
-              <Trash className="w-4 h-4 ml-2 text-red-500" />
+              {isLoading ? 'Creating...' : 'Generate AI Course'}
+              <Sparkles className="ml-2 h-5 w-5" />
             </Button>
           </div>
-
-          <Button
-            disabled={isLoading}
-            type="submit"
-            className="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full py-3 font-semibold text-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-200 shadow-lg"
-          >
-            Let`s Go!
-          </Button>
-        </form>
-      </Form>
-     {!isPro && <SubscriptionActionCard></SubscriptionActionCard>}
-    </div>
+        </motion.div>
+      </form>
+    </Form>
+    
+    {!isPro && (
+      <motion.div 
+        variants={itemVariants}
+        className="mt-10"
+      >
+        <SubscriptionActionCard />
+      </motion.div>
+    )}
+  </motion.div>
   );
 };
 

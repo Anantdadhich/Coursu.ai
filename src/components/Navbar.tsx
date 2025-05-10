@@ -1,50 +1,78 @@
-import { getAuthSession } from "@/lib/auth"
-import Image from "next/image"
+"use client";
+
+import { getAuthSession } from "@/lib/auth";
+import Image from "next/image";
 import Link from "next/link";
 import { UserAccount } from "./userAccount";
 import { Signinbutton } from "./Signinbutton";
 import { ModeToggle } from "./theme-provider";
+import { Navbar as ResizableNavbar, NavBody, NavItems } from "./ui/resizable-navbar";
+import { cn } from "@/lib/utils";
+import { Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
-export const Navbar = async() => {
-  const session = await getAuthSession();
+export default function Navbar({ className }: { className?: string }) {
+  const { data: session } = useSession();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const navItems = [
+    { name: "Courses", link: "/gallery" },
+    ...(session?.user ? [
+      { name: "Create Courses", link: "/create" },
+      { name: "Settings", link: "/settings" }
+    ] : [])
+  ];
+
   return (
-    <nav className="bg-gradient-to-r from-blue-50 via-indigo-100 to-purple-100 dark:from-gray-900 dark:via-indigo-900 dark:to-purple-900 text-gray-800 dark:text-gray-200 top-0 inset-x-0 h-fit fixed border-b border-gray-300 dark:border-gray-700 z-10 shadow-md transition-colors duration-300">
-      <div className="flex items-center justify-between h-14 px-8 mx-auto max-w-7xl">
-        <Link href="/" className="items-center gap-3 hidden sm:flex">
-          <Image
-            src="/icon.png"
-            width="45"
-            height="45"
-            alt="logo"
-            className="rounded-full"
-          />
-          <span className="font-bold text-xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">AI Course Gen</span>
+    <ResizableNavbar>
+      <NavBody className={cn( "bg-transparent shadow-md rounded-xl border backdrop-blur-md p-3 sm:p-4 md:p-5 fixed inset-x-0 top-2 z-50 max-w-7xl mx-auto px-4 sm:px-6" , className)}>
+        <Link href="/" className="flex items-center gap-2 cursor-pointer z-10">
+          <span className="text-lg sm:text-xl  tracking-tight text-black dark:text-white  font-mono">
+          𝕮𝖔𝖗𝖘𝖚.𝖆𝖎
+          </span>
         </Link>
-        <div className="flex items-center space-x-8">
-          <Link href="/gallery" className="font-semibold text-lg hover:text-blue-600 dark:hover:text-purple-400 transition-colors">
-           My Courses
-          </Link>
-          {session?.user && (
-            <>
-              <Link href="/create" className="font-semibold text-lg hover:text-blue-600 dark:hover:text-purple-400 transition-colors">
-                Create Course
-              </Link>
-               <Link href="/settings" className="font-semibold text-lg hover:text-blue-600 dark:hover:text-purple-400 transition-colors">
-                Settings
-              </Link>
-            
-            </>
-          )}
-          <ModeToggle />
-          <div className="flex items-center ml-4">
-            {session?.user ? (
-              <UserAccount user={session.user} />
+
+        {/* Desktop Navigation */}
+        <NavItems items={navItems} className="text-sm sm:text-md hidden sm:flex" />
+
+        {/* Mobile Navigation */}
+        <div className="sm:hidden">
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+          >
+            {isMobileMenuOpen ? (
+              <X className="h-6 w-6" />
             ) : (
-              <Signinbutton />
+              <Menu className="h-6 w-6" />
             )}
-          </div>
+          </button>
         </div>
-      </div>
-    </nav>
-  )
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+  <div className="absolute  left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 sm:hidden z-50">
+    <div className="px-4 py-2 space-y-1">
+      {navItems.map((item) => (
+        <Link
+          key={item.name}
+          href={item.link}
+          className="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md"
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          {item.name}
+        </Link>
+      ))}
+    </div>
+  </div>
+)}
+
+        <div className="flex items-center gap-2 sm:gap-4 z-10">
+          <ModeToggle />
+          {session?.user ? <UserAccount user={session.user} /> : <Signinbutton />}
+        </div>
+      </NavBody>
+    </ResizableNavbar>
+  );
 }
