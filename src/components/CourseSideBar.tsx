@@ -82,7 +82,7 @@ export const CourseSideBar = ({ course, currentChapterId }: Props) => {
       </AnimatePresence>
 
       {/* Desktop sidebar */}
-      <div className="hidden sm:block fixed top-10 left-0 w-full sm:max-w-[320px] md:max-w-[300px] lg:max-w-[400px] h-screen bg-neutral-300 dark:bg-neutral-900 sm:p-4 md:p-6 overflow-y-auto border-r border-black/10 dark:border-white/10 transition-colors duration-300 rounded-none">
+      <div className="hidden sm:block fixed top-0 left-0 w-full sm:max-w-[320px] md:max-w-[300px] lg:max-w-[400px] h-screen bg-neutral-300 dark:bg-neutral-900 sm:p-4 md:p-6 overflow-y-auto border-r border-black/10 dark:border-white/10 transition-colors duration-300 rounded-none">
         {renderSidebar()}
       </div>
     </>
@@ -91,12 +91,12 @@ export const CourseSideBar = ({ course, currentChapterId }: Props) => {
   function renderSidebar() {
     return (
       <>
-        <div className="mb-4 sm:mb-6">
-          <div className="flex items-center mb-3 sm:mb-4">
+        <div className="mt-20 mb-4 sm:mb-6">
+          <div className="flex items-center mb-3 sm:mb-4 ">
             <div className="w-5 h-5 sm:w-6 sm:h-6 mr-2 bg-black/10 dark:bg-white/10 rounded-md flex items-center justify-center">
               <Layers className="w-3 h-3 sm:w-4 sm:h-4" />
             </div>
-            <h2 className="text-xs sm:text-sm font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+            <h2 className="text-xs sm:text-sm font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400 ">
               {course.name}
             </h2>
           </div>
@@ -186,24 +186,7 @@ export const CourseSideBar = ({ course, currentChapterId }: Props) => {
           </div>
         ))}
 
-        <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-black/10 dark:border-white/10">
-          <div className="flex items-center justify-between mb-1.5 sm:mb-2">
-            <span className="text-xs font-medium text-gray-500 dark:text-gray-400">Course Progress</span>
-            <span className="text-xs font-medium text-blue-600 dark:text-blue-400">
-              {(() => {
-                const totalChapters = course.units.reduce((sum, unit) => sum + unit.chapters.length, 0);
-                const completedChapters = Math.floor(totalChapters * 0.3);
-                return `${completedChapters}/${totalChapters} chapters`;
-              })()}
-            </span>
-          </div>
-          <div className="w-full h-2 bg-black/5 dark:bg-white/5 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-gray-600 rounded-full"
-              style={{ width: '30%' }}
-            ></div>
-          </div>
-        </div>
+       
       </>
     )
   }

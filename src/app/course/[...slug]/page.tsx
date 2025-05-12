@@ -166,7 +166,7 @@ const CoursePage = async ({ params: { slug } }: Props) => {
       </div>
       
   
-      <div className="flex-1 p-4 md:p-8">
+      <div className="flex-1 p-8 md:p-8">
         <div className="flex flex-col lg:flex-row gap-6">
           <MainVideoSummary
             chapter={chapter}

@@ -2,10 +2,12 @@
 
 
 
-import { AvatarCircles } from "@/components/ui/avatar-circle";
+
+import AvatarCircles from "@/components/AvatarCircles";
 import {  Particles } from "@/components/ui/Backgroundbeams";
 import { LineShadowText } from "@/components/ui/Lineshadowtext";
 import { ShineBorder } from "@/components/ui/shineborder";
+import { UserCountDisplay } from "@/components/UserCountDisplay";
 
 
 import { motion, AnimatePresence, useTransform, useScroll } from "framer-motion";
@@ -101,7 +103,7 @@ export default function Home() {
       icon: <ChartLine />,
       title: "Interactive Quizzes",
       description:
-        "Every video is paired with AI-generated quizzes to reinforce learning. Learners get instant feedback — making it fun, effective, and memorable.",
+        "Every video is paired with AI-generated quizzes with specific youtube video. Learners get instant feedback — making it fun, effective, and memorable.",
       linkText: "Explore features",
       href: "/",
       stats: "92% better knowledge retention"
@@ -145,7 +147,7 @@ const steps = [
   {
     id: "01",
     title: "Enter Course Title & Chapters",
-    description: "Start by giving your course a name and a short subtitle. This helps define what your course is about and sets the foundation for the content generation process.",
+    description: "Start by giving your course a name and a units you want to cover. This helps define what your course is about and sets the foundation for the content generation process.",
     icon: <PenSquare className="w-8 h-8" />
   },
   {
@@ -157,7 +159,7 @@ const steps = [
   {
     id: "03",
     title: "Auto-Generated Quizzes",
-    description: "Based on the video content, Coursu creates interactive quizzes to reinforce learning. These questions are tailored to test the key concepts covered in the video.",
+    description: "Based on the video content, Coursu creates interactive quizzes to reinforce your learning experience. These questions are tailored to test the key concepts covered in the video.",
     icon: <ListChecks className="w-8 h-8" />
   },
   {
@@ -174,33 +176,33 @@ const steps = [
        
        <Particles
         className="absolute inset-0 z-0"
-        quantity={100}
-        size={1}
+        quantity={200}
+        size={1.5}
         ease={80}
         color={color}
       
         refresh
       />
-      <div className="absolute top-28 inset-x-0 flex justify-center z-30 ">
-        
-        <motion.div 
-          initial={{ y: -30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.7, type: "spring" }}
-          className="bg-black/5 dark:bg-white/5 border-black/10 dark:border-white/10 backdrop-filter backdrop-blur-lg shadow-xl border rounded-full px-6 py-4 flex items-center space-x-2 transition-colors duration-300"
-        >
-          <div className="flex items-center justify-center h-5 w-5 bg-black/10 dark:bg-white/10 rounded-full transition-colors duration-300 ">
-            <Sparkles className="h-3 w-3" />
-          </div>
-          <span className="text-sm font-medium ">Join interactive Learning</span>
-          <motion.div
-            animate={{ x: [0, 5, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5, repeatDelay: 2 }}
-          >
-            <ChevronRight className="h-4 w-4" />
-          </motion.div>
-        </motion.div>
-      </div>
+    <div className="hidden sm:flex absolute top-28 inset-x-0 justify-center z-30">
+  <motion.div 
+    initial={{ y: -30, opacity: 0 }}
+    animate={{ y: 0, opacity: 1 }}
+    transition={{ delay: 0.5, duration: 0.7, type: "spring" }}
+    className="bg-black/5 dark:bg-white/5 border-black/10 dark:border-white/10 backdrop-filter backdrop-blur-lg shadow-xl border rounded-full px-6 py-4 flex items-center space-x-2 transition-colors duration-300"
+  >
+    <div className="flex items-center justify-center h-5 w-5 bg-black/10 dark:bg-white/10 rounded-full transition-colors duration-300">
+      <Sparkles className="h-3 w-3" />
+    </div>
+    <span className="text-sm font-medium">Join interactive Learning</span>
+    <motion.div
+      animate={{ x: [0, 5, 0] }}
+      transition={{ repeat: Infinity, duration: 1.5, repeatDelay: 2 }}
+    >
+      <ChevronRight className="h-4 w-4" />
+    </motion.div>
+  </motion.div>
+</div>
+
       
       <div className="relative z-10 flex items-center justify-center min-h-screen w-full px-4 sm:px-6 pt-20 sm:pt-28 pb-12 sm:pb-20">
         <motion.div
@@ -254,9 +256,11 @@ const steps = [
 
             
             </motion.div>
-            <div className="mt-6 justify-center items-center">
-              <AvatarCircles numPeople={99} avatarUrls={avatars} />
-            </div>
+            <div className="mt-6 flex flex-col items-center justify-center space-y-2">
+      <AvatarCircles></AvatarCircles>
+  <UserCountDisplay />
+</div>
+
 
           </div>
           
@@ -300,9 +304,36 @@ const steps = [
 
 
 
-
+     
+         <motion.div variants={itemVariants} className="w-full mb-20">
+  <div className="text-center mb-12">
+    <h2 className="text-3xl md:text-4xl font-bold mb-4">
+      Build Smarter, Learn Faster
+    </h2>
+    <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto transition-colors duration-300">
+      Create personalized, adaptive learning experiences powered by intelligent AI — tailored to your goals, pace, and creativity.
+    </p>
+  </div>
+  
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+    {features.map((feature: any) => (
+      <FeatureCard 
+        key={feature.id}
+        icon={feature.icon}
+        title={feature.title}
+        description={feature.description}
+        linkText={feature.linkText}
+        href={feature.href}
+        stats={feature.stats}
+        onMouseEnter={() => setHoveredFeature(feature.id)}
+        onMouseLeave={() => setHoveredFeature(null)}
+        isActive={hoveredFeature === feature.id}
+      />
+    ))}
+  </div>
+</motion.div>
           
-          {/* How It Works Section - Added here */}
+     
           <motion.section
       ref={containerRef}
       variants={containerVariantss}
@@ -322,11 +353,7 @@ const steps = [
           {/* Static Line */}
           <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-px bg-black/10 dark:bg-white/10 transition-colors duration-300" />
 
-          {/* Animated Scroll Line */}
-          <motion.div
-            style={{ height: heightTransform }}
-            className="absolute left-1/2 transform -translate-x-1/2 w-px bg-gradient-to-b from-purple-500 via-blue-500 to-transparent rounded-full"
-          />
+         
 
           {/* Steps */}
           {steps.map((step, index) => (
@@ -368,34 +395,14 @@ const steps = [
       </div>
     </motion.section>
           
-          {/* Features Section */}
-          <motion.div variants={itemVariants} className="w-full mb-20">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Build Smarter, Learn Faster
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto transition-colors duration-300">
-              Create personalized, adaptive learning experiences powered by intelligent AI — tailored to your goals, pace, and creativity.
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              {features.map((feature:any) => (
-                <FeatureCard 
-                  key={feature.id}
-                  icon={feature.icon}
-                  title={feature.title}
-                  description={feature.description}
-                  linkText={feature.linkText}
-                  href={feature.href}
-                  stats={feature.stats}
-                  onMouseEnter={() => setHoveredFeature(feature.id)}
-                  onMouseLeave={() => setHoveredFeature(null)}
-                  isActive={hoveredFeature === feature.id}
-                />
-              ))}
-            </div>
-          </motion.div>
+
+
+
+
+
+
+
+
 
           {/* Pricing Section */}
           <motion.div variants={itemVariants} className="w-full mb-20">
@@ -430,7 +437,7 @@ const steps = [
                       <span>Community Support</span>
                     </li>
                   </ul>
-                  <button onClick={()=>router.push("/api/stripe")} className="w-full bg-black/10 dark:bg-white/10 text-gray-800 dark:text-gray-200 hover:bg-black/20 dark:hover:bg-white/20 rounded-lg px-6 py-3 font-medium transition-all duration-200">
+                  <button onClick={()=>router.push("/")} className="w-full bg-black/10 dark:bg-white/10 text-gray-800 dark:text-gray-200 hover:bg-black/20 dark:hover:bg-white/20 rounded-lg px-6 py-3 font-medium transition-all duration-200">
                     Get Started
                   </button>
                 </div>
@@ -464,7 +471,7 @@ const steps = [
                       <span>Analytics Dashboard</span>
                     </li>
                   </ul>
-                  <button onClick={()=>router.push("/api/stripe")} className="w-full bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 rounded-lg px-6 py-3 font-medium transition-all duration-200">
+                  <button onClick={()=>router.push("/")} className="w-full bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 rounded-lg px-6 py-3 font-medium transition-all duration-200">
                     Start Free Trial
                   </button>
                 </div>
@@ -495,7 +502,7 @@ const steps = [
                       <span>SLA Guarantee</span>
                     </li>
                   </ul>
-                  <button onClick={()=>router.push("/api/stripe")} className="w-full bg-black/10 dark:bg-white/10 text-gray-800 dark:text-gray-200 hover:bg-black/20 dark:hover:bg-white/20 rounded-lg px-6 py-3 font-medium transition-all duration-200">
+                  <button onClick={()=>router.push("/")} className="w-full bg-black/10 dark:bg-white/10 text-gray-800 dark:text-gray-200 hover:bg-black/20 dark:hover:bg-white/20 rounded-lg px-6 py-3 font-medium transition-all duration-200">
                     Contact Sales
                   </button>
                 </div>

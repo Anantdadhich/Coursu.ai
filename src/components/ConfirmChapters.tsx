@@ -178,7 +178,7 @@ const ConfirmChapters = ({ course }: Props) => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="w-full mt-4 bg-neutral-100 dark:bg-neutral-900 transition-colors duration-300 rounded-2xl shadow-lg overflow-hidden py-12 px-4 sm:px-6 lg:px-8"
+      className="w-full mt-4 bg-neutral-300 dark:bg-neutral-900 transition-colors duration-300 rounded-2xl shadow-lg overflow-hidden py-12 px-4 sm:px-6 lg:px-8"
     >
       <motion.div variants={itemVariants} className="text-center mb-10">
         <h1 className="text-3xl md:text-4xl font-bold mb-4">Course Chapters</h1>

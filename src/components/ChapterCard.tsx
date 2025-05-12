@@ -160,16 +160,19 @@ const ChapterCard = React.forwardRef<ChapterCardHandler, Props>(
     }));
     return (
       <div
-        key={chapter.id}
-        className={cn("px-4 py-2 mt-2 rounded flex justify-between", {
-          "bg-secondary": success === null,
-          "bg-red-500": success === false,
-          "bg-green-500": success === true,
-        })}
-      >
-        <h5>{chapter.name}</h5>
-        {isLoading && <Loader2 className="animate-spin" />}
-      </div>
+      key={chapter.id}
+      className={cn(
+        "w-full px-4 py-3 mt-2 rounded-xl border shadow-sm flex items-center justify-between transition-colors",
+        {
+          "bg-neutral-100 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700": success === null,
+          "bg-red-100 dark:bg-red-900/20 border-red-200 dark:border-red-800": success === false,
+          "bg-green-100 dark:bg-green-900/20 border-green-200 dark:border-green-800": success === true,
+        }
+      )}
+    >
+      <h5 className="text-sm font-medium text-black dark:text-white">{chapter.name}</h5>
+      {isLoading && <Loader2 className="w-4 h-4 animate-spin text-black dark:text-white" />}
+    </div>
     );
   }
 );
