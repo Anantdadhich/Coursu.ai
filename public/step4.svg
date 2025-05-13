@@ -1,0 +1,51 @@
+<svg width="800" height="450" viewBox="0 0 800 450" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="450" fill="#F3F4F6"/>
+  
+  <!-- Course Publishing Interface -->
+  <rect x="100" y="50" width="600" height="350" rx="8" fill="#E5E7EB"/>
+  
+  <!-- Header -->
+  <rect x="120" y="70" width="560" height="50" rx="4" fill="#D1D5DB"/>
+  <text x="350" y="100" font-family="Arial" font-size="18" font-weight="bold" fill="#4B5563" text-anchor="middle">Course Ready to Publish</text>
+  
+  <!-- Course Preview -->
+  <rect x="120" y="140" width="250" height="180" rx="8" fill="#D1D5DB"/>
+  <rect x="140" y="160" width="210" height="120" rx="4" fill="#9CA3AF"/>
+  <text x="245" y="220" font-family="Arial" font-size="14" fill="white" text-anchor="middle">Course Preview</text>
+  <rect x="140" y="290" width="210" height="20" rx="3" fill="#4B5563"/>
+  <text x="245" y="305" font-family="Arial" font-size="12" fill="white" text-anchor="middle">AI Web Development</text>
+  
+  <!-- Course Details -->
+  <rect x="400" y="140" width="280" height="180" rx="8" fill="#D1D5DB"/>
+  <text x="420" y="165" font-family="Arial" font-size="14" font-weight="bold" fill="#4B5563">Course Details</text>
+  
+  <!-- Details List -->
+  <rect x="420" y="180" width="240" height="1" fill="#9CA3AF"/>
+  
+  <text x="420" y="200" font-family="Arial" font-size="13" fill="#4B5563">Title: AI Web Development</text>
+  <text x="420" y="225" font-family="Arial" font-size="13" fill="#4B5563">Units: 5</text>
+  <text x="420" y="250" font-family="Arial" font-size="13" fill="#4B5563">Chapters: 15</text>
+  <text x="420" y="275" font-family="Arial" font-size="13" fill="#4B5563">Quiz Questions: 25</text>
+  <text x="420" y="300" font-family="Arial" font-size="13" fill="#4B5563">Estimated Duration: 4 hours</text>
+  
+  <!-- Publish Section -->
+  <rect x="120" y="340" width="560" height="50" rx="6" fill="#D1D5DB"/>
+  <text x="140" y="370" font-family="Arial" font-size="14" fill="#4B5563">Share your course with:</text>
+  
+  <!-- Social Sharing -->
+  <circle cx="300" cy="365" r="15" fill="#4338CA"/>
+  <text x="300" y="370" font-family="Arial" font-size="14" fill="white" text-anchor="middle">f</text>
+  
+  <circle cx="340" cy="365" r="15" fill="#0EA5E9"/>
+  <text x="340" y="370" font-family="Arial" font-size="14" fill="white" text-anchor="middle">t</text>
+  
+  <circle cx="380" cy="365" r="15" fill="#10B981"/>
+  <text x="380" y="370" font-family="Arial" font-size="14" fill="white" text-anchor="middle">W</text>
+  
+  <circle cx="420" cy="365" r="15" fill="#F59E0B"/>
+  <text x="420" y="370" font-family="Arial" font-size="14" fill="white" text-anchor="middle">g</text>
+  
+  <!-- Publish Button -->
+  <rect x="480" y="350" width="180" height="40" rx="20" fill="#10B981"/>
+  <text x="570" y="375" font-family="Arial" font-size="14" fill="white" font-weight="bold" text-anchor="middle">Publish Course</text>
+</svg> 

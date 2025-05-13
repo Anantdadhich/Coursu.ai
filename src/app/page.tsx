@@ -5,6 +5,7 @@
 
 import AvatarCircles from "@/components/AvatarCircles";
 import {  Particles } from "@/components/ui/Backgroundbeams";
+import { HeroVideoDialog } from "@/components/ui/hero-video";
 import { LineShadowText } from "@/components/ui/Lineshadowtext";
 import { ShineBorder } from "@/components/ui/shineborder";
 import { UserCountDisplay } from "@/components/UserCountDisplay";
@@ -85,7 +86,7 @@ export default function Home() {
       description:
         "Type a course topic and chapters you want to cover, and let our AI do the heavy lifting — it fetches the best YouTube videos course, summarizes of videos, and assembles a full course for you in minutes.",
       linkText: "Try it now",
-      href: "/",
+      href: "/create",
       stats: "10x faster course creation"
     },
     {
@@ -95,7 +96,7 @@ export default function Home() {
       description:
         "Coursu leverages Google's Gemini AI to analyze YouTube videos, distill key ideas, and turn them into personalized lessons with best videos, insightful summaries, and smart quizzes.",
       linkText: "See how it works",
-      href: "/",
+      href: "/gallery",
       stats: "5x more learner engagement"
     },
     {
@@ -105,7 +106,7 @@ export default function Home() {
       description:
         "Every video is paired with AI-generated quizzes with specific youtube video. Learners get instant feedback — making it fun, effective, and memorable.",
       linkText: "Explore features",
-      href: "/",
+      href: "/gallery",
       stats: "92% better knowledge retention"
     }
   ];
@@ -240,7 +241,7 @@ const steps = [
                 className="relative group overflow-hidden bg-black dark:bg-white text-white dark:text-black  rounded-full px-8 py-4 font-medium text-lg transition-all duration-200 shadow-lg  border-black/10 dark:border-white/10 backdrop-filter backdrop-blur-lg  border "
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
-                  Get started
+                  Get started for free
                 </span>
               </motion.button>
               
@@ -256,10 +257,19 @@ const steps = [
 
             
             </motion.div>
-            <div className="mt-6 flex flex-col items-center justify-center space-y-2">
-      <AvatarCircles></AvatarCircles>
-  <UserCountDisplay />
-</div>
+            <motion.div 
+              variants={itemVariants}
+              className="mt-8 flex flex-col items-center justify-center space-y-2"
+            >
+              <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-2">
+                <span>To Join Login to our growing community of creators and learners</span>
+              </div>
+              <div className="flex items-center gap-4">
+                <AvatarCircles />
+                <div className="h-8 w-px bg-black/10 dark:bg-white/10 mx-2"></div>
+                <UserCountDisplay />
+              </div>
+            </motion.div>
 
 
           </div>
@@ -271,33 +281,31 @@ const steps = [
   className="w-full max-w-5xl mx-auto mb-16 sm:mb-24 relative px-4 sm:px-0"
 >
 
-  <div className="absolute inset-0 z-30 pointer-events-none rounded-3xl">
-    <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
+  <div className="absolute inset-0 z-30 pointer-events-none rounded-2xl">
+    <ShineBorder shineColor={["#A07CFE80", "#FE8FB580", "#FFBE7B80"]} />
   </div>
-
  
-  <div className="absolute -inset-1 bg-black/10 dark:bg-white/10 rounded-3xl blur opacity-30 z-10"></div>
 
+  <div className="absolute -inset-1 bg-gradient-to-br from-black/5 to-white/5 dark:from-white/5 dark:to-black/5 rounded-2xl blur-md opacity-30 z-10"></div>
 
-  <div className="relative z-20 bg-white/60 dark:bg-black/60 border border-black/10 dark:border-white/10 backdrop-filter backdrop-blur-md rounded-3xl overflow-hidden shadow-2xl transition-colors duration-300">
-    
-   
-    <div className="h-12 bg-neutral-200 dark:bg-neutral-800 border-b border-black/10 dark:border-white/10 flex items-center px-4 transition-colors duration-300">
+  <div className="relative z-20 bg-white/80 dark:bg-neutral-900/80 border border-black/5 dark:border-white/5 backdrop-filter backdrop-blur-md rounded-2xl overflow-hidden shadow-xl transition-colors duration-300">{/* Mac-style header */}
+    <div className="h-10 bg-gray-100 dark:bg-neutral-900 border-b border-black/10 dark:border-white/10 flex items-center px-4 transition-colors duration-300">
       <div className="flex space-x-2">
-        <div className="w-3 h-3 bg-gray-400 rounded-full" />
-        <div className="w-3 h-3 bg-gray-400 rounded-full" />
-        <div className="w-3 h-3 bg-gray-400 rounded-full" />
+        <div className="w-3 h-3 bg-red-500 rounded-full" />
+        <div className="w-3 h-3 bg-yellow-500 rounded-full" />
+        <div className="w-3 h-3 bg-green-500 rounded-full" />
       </div>
-      <div className="absolute left-1/2 transform -translate-x-1/2 bg-gray-200/70 dark:bg-neutral-800 text-gray-700 dark:text-gray-300 rounded-md px-4 py-0.5 text-xs">
-        Coursu.ai 
+      <div className="absolute left-1/2 transform -translate-x-1/2 bg-gray-200/50 dark:bg-neutral-800/50 text-gray-700 dark:text-gray-300 rounded-lg px-4 py-0.5 text-xs font-medium">
+        Coursu.ai
       </div>
     </div>
 
-    {/* Body */}
-    <div className="p-6 md:p-8">
-      <div className="w-full aspect-video bg-neutral-100 dark:bg-neutral-800 rounded-xl flex items-center justify-center overflow-hidden transition-colors duration-300">
-        <Image src="/dashboard.png" alt="dashboard" width={1000} height={1000} />
-      </div>
+    <div className="w-full h-full">
+      <HeroVideoDialog
+        className="w-full h-full object-cover dark:block"
+        videoSrc="/dashboard.mp4"
+        thumbnailSrc="/dashboard.png"
+      />
     </div>
   </div>
 </motion.div>

@@ -1,0 +1,16 @@
+<svg width="800" height="450" viewBox="0 0 800 450" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="450" fill="#F3F4F6"/>
+  <rect x="100" y="100" width="600" height="80" rx="8" fill="#E5E7EB"/>
+  <rect x="120" y="120" width="300" height="40" rx="4" fill="#D1D5DB"/>
+  <text x="140" y="145" font-family="Arial" font-size="18" fill="#4B5563">Course Title</text>
+  
+  <rect x="100" y="200" width="600" height="200" rx="8" fill="#E5E7EB"/>
+  <rect x="120" y="220" width="560" height="40" rx="4" fill="#D1D5DB"/>
+  <text x="140" y="245" font-family="Arial" font-size="18" fill="#4B5563">Chapter 1: Introduction</text>
+  
+  <rect x="120" y="270" width="560" height="40" rx="4" fill="#D1D5DB"/>
+  <text x="140" y="295" font-family="Arial" font-size="18" fill="#4B5563">Chapter 2: Fundamentals</text>
+  
+  <rect x="120" y="320" width="560" height="40" rx="4" fill="#D1D5DB"/>
+  <text x="140" y="345" font-family="Arial" font-size="18" fill="#4B5563">Chapter 3: Advanced Concepts</text>
+</svg> 
